@@ -1,0 +1,45 @@
+Let us talk about bits.
+There are 2 ways to represent numbers, signed and unsigned. For signed numbers, we represent negative numbers by 2's complement, which basically is every bit reversed
+followed by adding a 1. The MSB (right-most bit or most significant bit) is the sign bit.) For example, for a 3-bit system, the number 001 represents 1 and 101 represents
+-(010+1)==-3 in decimal system. In unsigned convention all the bits are used for representing the value of the number, 101 becomes 5. In the signed convention, the largest 
+number is 011 which is 3, or 2^n-1-1 in general. And the smallest number is 100 or -2^(n-1) in general.
+
+Try to think why the number -x in signed convention becomes 2^n-x in unsigned convention.
+In a signed convention, the next number after the largest number is the smallest number, and in unsigned convention, the next number after the largest number is 0. Try
+to explain why.
+
+Here's something interesting:
+int x = -43;
+unsigned int y = x;
+cout << x << "\n"; // -43
+cout << y << "\n"; // 4294967253
+This is because y=x assignes exactly bit-by-bit the value of x to y, and since y is unsigned, its bits are read accordingly.
+
+x<<k is a left shift operation done k times. A left shift operation appends a 0 bit to the right of a number and deletes the right-most bit of the number.
+A right shift is defined similarly. Note that x<<k is same as multiplying x by 2^k.
+Try to prove why x is divisible 1<<k exactly when x&([1<<k]-1)==0 for a positive integer x.
+Shifting operations on negative integers are not defined in c++. 1<<30 will give a sane and normal positive number. Another left shift and you get INT_MIN due to overflow.
+Try to do another left shift and you get undefined behaviour.
+
+It is also possible to modify single bits of numbers using similar ideas. For
+example, the formula x | (1 << k) sets the kth bit of x to one, the formula x &
+~(1 << k) sets the kth bit of x to zero, and the formula x ^ (1 << k) inverts the
+kth bit of x.
+
+The formula x & (x− 1) sets the last one bit of x to zero, and the formula x &
+−x sets all the one bits to zero, except for the last one bit. The formula x | (x− 1)
+inverts all the bits after the last one bit. Also note that a positive number x is a
+power of two exactly when x & (x− 1)= 0.
+
+g++ compiler provides certain interesting functions:
+int x = 5328; // 00000000000000000001010011010000
+cout << __builtin_clz(x) << "\n"; // 19
+cout << __builtin_ctz(x) << "\n"; // 4
+cout << __builtin_popcount(x) << "\n"; // 5
+cout << __builtin_parity(x) << "\n"; // 1
+
+Bit operations are extremely fast. For integers, they can be treated as happening in constant time. They are performed almost in parallel,
+directly using logic gates in the CPU, and often take just 1 clock cycle.
+We can exploit this fact to speed up a lot of problems, by replacing appropriate operations with analogous Bit operations.
+
+
