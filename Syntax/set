@@ -1,0 +1,115 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Custom comparator example
+struct cmp {
+    bool operator()(const pair<int,int>& a, const pair<int,int>& b) const {
+        if (a.first == b.first) return a.second < b.second; // tie-breaker
+        return a.first > b.first; // sort descending by first
+    }
+};
+
+int main() {
+    // ============================================================
+    // 1. set basics
+    // ============================================================
+    cout << "=== set basics ===\n";
+    set<int> s;
+    s.insert(10);
+    s.insert(20);
+    s.insert(10); // duplicates ignored
+    s.insert(30);
+
+    cout << "size = " << s.size() << "\n";        // 3
+    cout << "count(20) = " << s.count(20) << "\n"; // 1
+    cout << "min = " << *s.begin() << "\n";       // 10
+    cout << "max = " << *s.rbegin() << "\n";      // 30
+
+    // find
+    auto it = s.find(20);
+    if (it != s.end()) cout << "found " << *it << "\n";
+
+    // erase by value
+    s.erase(20);
+
+    // iterate
+    cout << "elements: ";
+    for (int x : s) cout << x << " ";
+    cout << "\n";
+
+    // ============================================================
+    // 2. multiset basics
+    // ============================================================
+    cout << "\n=== multiset basics ===\n";
+    multiset<int> ms;
+    ms.insert(10);
+    ms.insert(10);
+    ms.insert(20);
+    ms.insert(30);
+
+    cout << "size = " << ms.size() << "\n";        // 4
+    cout << "count(10) = " << ms.count(10) << "\n"; // 2
+
+    // erase only ONE occurrence
+    auto it2 = ms.find(10);
+    if (it2 != ms.end()) ms.erase(it2);
+
+    cout << "count(10) after one erase = " << ms.count(10) << "\n";
+
+    // erase ALL occurrences of 20
+    ms.erase(20);
+
+    cout << "elements: ";
+    for (int x : ms) cout << x << " ";
+    cout << "\n";
+
+    // ============================================================
+    // 3. lower_bound and upper_bound
+    // ============================================================
+    cout << "\n=== lower_bound / upper_bound ===\n";
+    set<int> s2 = {10, 20, 30, 40};
+
+    auto it3 = s2.lower_bound(25); // first >= 25
+    if (it3 != s2.end()) cout << "lower_bound(25) = " << *it3 << "\n"; // 30
+
+    auto it4 = s2.upper_bound(30); // first > 30
+    if (it4 != s2.end()) cout << "upper_bound(30) = " << *it4 << "\n"; // 40
+
+    // ============================================================
+    // 4. erase by iterator range
+    // ============================================================
+    cout << "\n=== erase range ===\n";
+    set<int> s3 = {1, 2, 3, 4, 5};
+    auto it5 = s3.lower_bound(2);
+    auto it6 = s3.upper_bound(4);
+    s3.erase(it5, it6); // removes 2,3,4
+    for (int x : s3) cout << x << " "; // 1 5
+    cout << "\n";
+
+    // ============================================================
+    // 5. custom comparator
+    // ============================================================
+    cout << "\n=== custom comparator ===\n";
+    set<pair<int,int>, cmp> sp;
+    sp.insert({5, 100});
+    sp.insert({5, 200});
+    sp.insert({10, 300});
+    sp.insert({1, 400});
+
+    for (auto [a,b] : sp) cout << "(" << a << "," << b << ") ";
+    cout << "\n"; // sorted by first descending, then second ascending
+
+    // ============================================================
+    // 6. quick tricks
+    // ============================================================
+    cout << "\n=== tricks ===\n";
+    vector<int> v = {1,2,2,3,1};
+    set<int> uniq(v.begin(), v.end()); // remove duplicates
+    cout << "unique elements: ";
+    for (int x : uniq) cout << x << " ";
+    cout << "\n";
+
+    multiset<int> ms2 = {5,1,3,5,2};
+    cout << "min = " << *ms2.begin() << "\n";  // 1
+    cout << "max = " << *ms2.rbegin() << "\n"; // 5
+}
