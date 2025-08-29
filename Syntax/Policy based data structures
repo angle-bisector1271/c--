@@ -1,0 +1,74 @@
+The g++ compiler also supports some data structures that are not part of the C++
+standard library. Such structures are called policy-based data structures. To use
+these structures, the following lines must be added to the code:
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+
+
+Ordered set:
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+
+template <typename T>
+using ordered_set = tree<
+    T,
+    null_type,
+    less<T>,
+    rb_tree_tag,
+    tree_order_statistics_node_update>;
+
+int main() {
+    ordered_set<int> s;
+    s.insert(10);
+    s.insert(20);
+    s.insert(30);
+    s.insert(40);
+
+    cout << *s.find_by_order(0) << "\n"; // 10
+    cout << *s.find_by_order(2) << "\n"; // 30
+    cout << s.order_of_key(30) << "\n";  // 2
+    cout << s.order_of_key(25) << "\n";  // 2
+}
+
+Ordered multiset:
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+
+template <typename T>
+using ordered_multiset = tree<
+    pair<T,int>,                  // store value + unique index
+    null_type,
+    less<pair<T,int>>,
+    rb_tree_tag,
+    tree_order_statistics_node_update>;
+int main() {
+    ordered_multiset<int> ms;
+    int timer = 0; // unique id for duplicates
+
+    // insert values
+    ms.insert({10, timer++});
+    ms.insert({20, timer++});
+    ms.insert({20, timer++}); // duplicate
+    ms.insert({30, timer++});
+
+    // find k-th element
+    cout << ms.find_by_order(0)->first << "\n"; // 10
+    cout << ms.find_by_order(1)->first << "\n"; // 20
+    cout << ms.find_by_order(2)->first << "\n"; // 20
+    cout << ms.find_by_order(3)->first << "\n"; // 30
+
+    // count numbers < 25
+    cout << ms.order_of_key({25, 0}) << "\n"; // 3 elements < 25
+
+    // erase one "20"
+    auto it = ms.lower_bound({20, 0}); // first occurrence of 20
+    if (it != ms.end()) ms.erase(it);
+
+    cout << ms.order_of_key({25, 0}) << "\n"; // now only 2 elements < 25
+}
