@@ -1,0 +1,16 @@
+This article contains some information about some c++ data structures.
+
+String:
+s+=a directly copies elements of a to the end of s. s=s+a creates a copy of s and then puts the elements of a at the end of it which is inefficient.
+In python on the other hand, either way of adding a to s is inefficient and leads to a copy of s being created.
+
+Ordered set: 
+Both the PBDS and vanilla ordered set have their internal implementation using RB tree.
+Map:
+Also implemented using RB tree.
+
+What is an iterator?
+An iterator is a variable that points to an element in a data structure.
+
+For any ordered data structure s, s.begin() returns an iterator to the first element of the data structure, while s.end() points to 1 element
+past the last element.
