@@ -1,0 +1,63 @@
+-- ===========================
+-- C++ VECTOR CHEAT SHEET
+-- ===========================
+vector<int> v;                        -- declaration
+vector<int> v(n, 0);                  -- init with size & value
+vector<vector<int>> v(n, vector<int>(m, 0)); -- 2D vector
+v.push_back(x);                       -- add element
+v.pop_back();                         -- remove last element
+v[i];                                 -- access by index
+v.size();                             -- number of elements
+v.empty();                            -- check empty
+v.front(); v.back();                  -- first/last element
+v.insert(v.begin()+i, x);             -- insert at index
+v.erase(v.begin()+i);                 -- erase one element
+v.erase(v.begin()+l, v.begin()+r);    -- erase range
+v.clear();                            -- clear all
+for (int x : v)                       -- iterate (range loop)
+for (int i=0; i<v.size(); i++)        -- iterate (index)
+v.begin(); v.end(); v.rbegin(); v.rend(); -- iterators
+sort(v.begin(), v.end());             -- sort ascending
+sort(v.rbegin(), v.rend());           -- sort descending
+reverse(v.begin(), v.end());          -- reverse
+find(v.begin(), v.end(), x);          -- find element
+lower_bound(v.begin(), v.end(), x);   -- first >= x
+upper_bound(v.begin(), v.end(), x);   -- first > x
+v.erase(unique(v.begin(), v.end()), v.end()); -- remove dups
+*max_element(v.begin(), v.end());     -- max element
+*min_element(v.begin(), v.end());     -- min element
+accumulate(v.begin(), v.end(), 0);    -- sum of elements
+vector<int> v(arr, arr+n);            -- init from array
+v1.swap(v2);                          -- swap vectors
+
+-- ===========================
+-- C++ STRING CHEAT SHEET
+-- ===========================
+string s;                             -- declaration
+string s = "hello";                   -- init with value
+string s(n, 'a');                     -- init with size & char
+s1 + s2;                              -- concatenate
+s.push_back(c);  s += "xyz";          -- append
+s.pop_back();                         -- erase last char
+s[i];                                 -- access by index
+s.size(); s.length();                 -- length
+s.empty();                            -- check empty
+s.front(); s.back();                  -- first/last char
+s.substr(pos, len);                   -- substring
+s.find("abc"); s.find('x');           -- find substring/char
+reverse(s.begin(), s.end());          -- reverse
+sort(s.begin(), s.end());             -- sort chars
+s.insert(pos, "abc");                 -- insert
+s.erase(pos, len);                    -- erase
+s.replace(pos, len, "new");           -- replace
+if (s1 == s2), if (s1 < s2);          -- compare (lexicographic)
+for (char c : s)                      -- iterate (range loop)
+for (int i=0; i<s.size(); i++)        -- iterate (index)
+int x = stoi(s); long long y = stoll(s); -- string -> int/ll
+string t = to_string(12345);          -- number -> string
+getline(cin, s);                      -- read full line
+s.c_str();                            -- C-string pointer
+s.find('a'); s.rfind('a');            -- first/last occurrence
+s.find_first_of("abc");               -- first match from set
+s.find_last_of("abc");                -- last match from set
+s.clear();                            -- clear all
